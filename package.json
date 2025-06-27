@@ -1,0 +1,14 @@
+{
+  "name": "com.yourcompany.nlai",
+  "version": "0.1.0-beta.1",
+  "displayName": "Natural Language AI",
+  "description": "A tool for generating NPC behavior trees from natural language descriptions.",
+  "unity": "2022.3",
+  "author": {
+    "name": "NLAI User",
+    "url": ""
+  },
+  "dependencies": {
+    "com.unity.modules.ai": "1.0.0"
+  }
+} 
