@@ -8,6 +8,13 @@
     "name": "NLAI User",
     "url": ""
   },
+  "samples": [
+    {
+      "displayName": "Example Actions and Senses",
+      "description": "Contains a collection of useful example components to get started with NLAI.",
+      "path": "Samples~"
+    }
+  ],
   "dependencies": {
     "com.unity.modules.ai": "1.0.0"
   }
