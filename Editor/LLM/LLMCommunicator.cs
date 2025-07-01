@@ -7,12 +7,12 @@ using UnityEditor;
 public static class LLMCommunicator
 {
     public static async System.Threading.Tasks.Task<(Node tree, string feedback)> ConvertDescriptionToTree(
-        string description,
-        bool loop,
-        bool isReactive,
-        List<string> senses,
-        List<string> actions,
-        NLAISettings settings)
+    string description,
+    bool loop,
+    bool isReactive,
+    List<string> senses,
+    List<string> actions,
+    NLAISettings settings)
     {
         if (settings == null || string.IsNullOrEmpty(settings.apiKey))
         {
@@ -29,15 +29,54 @@ public static class LLMCommunicator
         }
 
         var systemPrompt = $@"
-You are an expert in Behavior Trees. Your task is to convert a user's description of NPC behavior into a valid JSON structure.
+You are an expert in Behavior Trees and AI behavior design. Your task is to convert a user's description of NPC behavior into a valid JSON structure.
+
+CRITICAL: Understand these common AI behavior patterns when interpreting user requests:
+
+1. **Chase Behaviors**: When a user says 'chase an enemy' or 'pursue a target', this typically means:
+   - Continuously move toward the target WHILE checking if it's still visible/detectable
+   - If the target becomes undetectable during the chase, the chase should end
+   - Use StatefulSequence with the detection sense FIRST, then the chase action
+
+2. **State Transitions**: Phrases like 'if target is lost', 'when enemy disappears', 'lose sight' refer to:
+   - Conditions that should be checked DURING other actions (like chasing)
+   - NOT separate, independent branches that run in parallel
+   - The transition FROM one state (chasing) TO another state (patrolling)
+
+3. **Continuous Behaviors**: Actions like 'patrol', 'wander', 'guard' should:
+   - Be implemented as single, intelligent Actions that handle their own looping
+   - NOT be broken down into sequences of individual waypoint movements
+   - Return RUNNING while active, SUCCESS when complete (if ever)
+
+4. **Priority-Based Logic**: When users describe priorities ('first do X, but if Y, then Z'):
+   - Use PrioritySelector where higher priority conditions are checked first
+   - Each priority branch should be a complete behavior (sense + action sequence)
+
+EXAMPLE INTERPRETATIONS:
+- 'Chase enemy, if target lost, return to patrol' = PrioritySelector with:
+  Branch 1: StatefulSequence[CanSeeEnemy → Chase] 
+  Branch 2: Patrol (default behavior)
+- 'If health low, flee. Otherwise patrol' = PrioritySelector with:
+  Branch 1: StatefulSequence[IsHealthLow → Flee]
+  Branch 2: Patrol
+
+IMPORTANT: For chase behaviors, NEVER create separate 'HasLostTarget' or 'TargetLost' branches. The chase should automatically stop when the detection sense fails.
 
 First, analyze the user's request against the provided list of Senses and Actions.
 
-1.  If all parts of the request can be fully implemented with the available components, your output must ONLY be a single JSON object representing the Behavior Tree.
-2.  If ANY part of the request requires logic for which no component exists (e.g., 'jump', 'open a door', 'check for a key'), you MUST NOT generate a tree. Instead, your output must ONLY be a single JSON object with a 'feedback' field. This field should contain a friendly, high-level explanation of what's missing and guide the user on how they could create it. Do NOT provide code templates. For example, if the user asks for the character to 'run away' from an enemy:
-    {{
-      ""feedback"": ""It looks like you're asking the character to 'run away', but there isn't an Action for that. To implement this, you could create a new C# script that implements the IAction interface. Inside its Execute() method, you would need to get the enemy's position, calculate a destination away from them, and then use the NavMeshAgent to move there. Alternatively, you could use an existing movement action if it can be given a destination.""
-    }}
+- If all parts of the request can be fully implemented with the available components, your output must ONLY be a single JSON object representing the Behavior Tree.
+- If ANY part of the request requires logic for which no component exists, you MUST NOT generate a tree. Instead, your output must ONLY be a single JSON object with a 'feedback' field.
+
+The feedback must be a clear, user-friendly guide on how to create the missing components. It should follow these rules:
+1.  Start by acknowledging the user's goal (e.g., 'It looks like you want to create an AI that can patrol, chase enemies, and flee when hurt.').
+2.  List the specific Senses and Actions that are required but not available.
+3.  For EACH missing component, provide a conceptual recipe. Explain its purpose, what data it might need, and its core logic. Do NOT provide code, only high-level descriptions.
+4.  If the user asks for a complex behavior like 'patrolling', explain how they could build a dedicated, intelligent Action for it.
+
+For example, if the user asks for the character to 'flee' and 'patrol':
+{{
+""feedback"": ""It looks like you want an AI that can patrol and flee. To do that, you'll need a few new components:\n\n1.  **A Sense for Low Health:** This would be a Sense component that needs a reference to a 'Health' script. Its job is to check if the current health is below a certain percentage and return SUCCESS if it is.\n\n2.  **A 'Flee' Action:** This would be an Action component. It would need a reference to the enemy's location and a list of safe points. Its logic would find the safest point farthest from the enemy and tell the NavMeshAgent to move there.\n\n3.  **A 'Patrol' Action:** For a continuous patrol, it's best to create a dedicated Action. This component would hold a list of waypoint transforms. Its logic would be to move to the next waypoint in the list each time it arrives at one, creating a continuous loop.""
+}}
 
 {promptHeader}
 The user will describe the branches of the main {rootNodeType}. You must assemble these into a valid tree.
@@ -45,12 +84,13 @@ The user will describe the branches of the main {rootNodeType}. You must assembl
 - Available Senses: {string.Join(", ", senses)}
 - Available Actions: {string.Join(", ", actions)}
 
-- 'PrioritySelector': A reactive selector. It executes children in order from left to right. It will always re-evaluate from the start.
-- 'StatefulSequence': A sequence with memory. It executes children in order and resumes where it left off.
-- 'Inverter': A decorator that inverts the result: SUCCESS becomes FAILURE, and FAILURE becomes SUCCESS.
-- 'Root': A special decorator that re-runs its child indefinitely. Always make this the top-level node if the user wants looping behavior.
-- Senses have a 'type' of 'Sense'.
-- Actions have a 'type' of 'Action'.";
+JSON Structure Rules:
+- The top-level element MUST be a single JSON object representing the root node of the tree.
+- Every node MUST have a 'type' property (e.g., 'Root', 'PrioritySelector', 'StatefulSequence', 'Inverter', 'Action', 'Sense').
+- Action nodes MUST have a 'name' property with the action's name. Example: {{ ""type"": ""Action"", ""name"": ""MyAction"" }}
+- Sense nodes MUST have a 'name' property with the sense's name. Example: {{ ""type"": ""Sense"", ""name"": ""MySense"" }}
+- Root and Inverter nodes MUST have a single 'child' property containing their child node.
+- PrioritySelector and StatefulSequence nodes MUST have a 'children' property, which is an array of their child nodes.";
 
         var (success, jsonResponse) = await NLAIEdHttp.InvokeLLM(systemPrompt, description, settings);
 
@@ -63,6 +103,7 @@ The user will describe the branches of the main {rootNodeType}. You must assembl
         try
         {
             JObject json = JObject.Parse(jsonResponse);
+            Debug.Log($"LLM Raw Response:\n{jsonResponse}");
             
             // Check if the LLM provided feedback instead of a tree
             if (json["feedback"] != null)
@@ -127,6 +168,7 @@ The user will describe the branches of the main {rootNodeType}. You must assembl
                 return null;
         }
 
+        // Handle children for composite nodes
         if (jsonNode["children"] is JArray children)
         {
             var childNodes = new List<Node>();
@@ -138,18 +180,25 @@ The user will describe the branches of the main {rootNodeType}. You must assembl
                     childNodes.Add(childNode);
                 }
             }
-
-            if (node is InverterNode inverter)
-            {
-                if (childNodes.Count > 0) inverter.child = childNodes[0];
-            }
-            else if (node is RootNode root)
-            {
-                if (childNodes.Count > 0) root.child = childNodes[0];
-            }
-            else if (node is CompositeNode composite)
+            if (node is CompositeNode composite)
             {
                 composite.SetChildren(childNodes);
+            }
+        }
+        // Handle child for decorator nodes
+        else if (jsonNode["child"] is JObject child)
+        {
+            Node childNode = CreateNode(child, availableActions, availableSenses);
+            if (childNode != null)
+            {
+                if (node is RootNode root)
+                {
+                    root.child = childNode;
+                }
+                else if (node is InverterNode inverter)
+                {
+                    inverter.child = childNode;
+                }
             }
         }
         

@@ -1,0 +1,257 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8469180602562703812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964a6e6e971f3484283e991b942169a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 3323b53d-d111-46fc-bf24-ab8c1c3fc26f
+  children:
+  - {fileID: -496841287887454340}
+  - {fileID: 1610227281456084283}
+--- !u!114 &-8441989295800650516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516bd54e859100443bca5aa0c3e7c038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 96f96fe7-550e-4896-8e76-2c0b40be7d9c
+  senseName: IsTargetLost
+--- !u!114 &-6956669541583034536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516bd54e859100443bca5aa0c3e7c038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 823ad900-116e-4c4f-8e5c-272169e5183b
+  senseName: IsHealthLow
+--- !u!114 &-3866185311149812786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 49869bb0-68cf-46bf-b85e-b76c986de513
+  actionName: GoToPointB
+--- !u!114 &-3310575596351407940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: fe3a435c-7f5a-40d5-873a-6cc3b041f424
+  actionName: Flee
+--- !u!114 &-2833704189075049320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 1b208ad6-0ea8-4f28-a451-4768614fe143
+  actionName: GoToPointA
+--- !u!114 &-2415371321366507204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1930ddb3ddf2664cbcb51387eccba3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 8d2b349e-fd13-4b9d-b563-4b746bca2a86
+  child: {fileID: 6141446962308375230}
+--- !u!114 &-496841287887454340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516bd54e859100443bca5aa0c3e7c038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 0788357e-7630-4426-a959-df62e1e86922
+  senseName: IsEnemyVisible
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58edaaed67a7ab344a2d37b225956574, type: 3}
+  m_Name: BehaviorTreeNLTest
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -2415371321366507204}
+  description: 'Create an AI with the following priorities: First and most importantly,
+    if my health is low, I need to flee. If I can see an enemy, I should chase them.
+    If the target is lost, go back to patrolling. Otherwise, I should continuously
+    patrol back and forth between Point A and Point B.'
+--- !u!114 &34633462337375817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964a6e6e971f3484283e991b942169a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 0afafe32-b1b2-491a-b3ae-ad456957960f
+  children:
+  - {fileID: 5123061627800525736}
+  - {fileID: -3866185311149812786}
+--- !u!114 &1610227281456084283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: a1c6e7bb-314b-4bc9-bc29-a6c90904a11a
+  actionName: ChaseEnemy
+--- !u!114 &4276069466504829219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964a6e6e971f3484283e991b942169a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 5dfb66bc-b59b-4071-8e5d-9504e5db6adc
+  children:
+  - {fileID: -8441989295800650516}
+  - {fileID: -2833704189075049320}
+  - {fileID: 8523619169163995009}
+--- !u!114 &5123061627800525736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 0f764dc3-dcb4-4da9-8786-ebed1c02c3c6
+  actionName: GoToPointA
+--- !u!114 &5260266603639712062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964a6e6e971f3484283e991b942169a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 4800c37d-6228-4b39-93d9-6b251c9b0c82
+  children:
+  - {fileID: -6956669541583034536}
+  - {fileID: -3310575596351407940}
+--- !u!114 &6141446962308375230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9454db39260c2c44cbcf104b0f3c145a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: 0d5328b5-e49d-4ccd-91b5-ffc241672c2a
+  children:
+  - {fileID: 5260266603639712062}
+  - {fileID: -8469180602562703812}
+  - {fileID: 4276069466504829219}
+  - {fileID: 34633462337375817}
+--- !u!114 &8523619169163995009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942affa603717d4b8c2b89578aa4e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  guid: de3e5710-7045-431c-8e5b-e0046df1a26b
+  actionName: GoToPointB

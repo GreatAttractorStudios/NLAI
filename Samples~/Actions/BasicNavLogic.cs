@@ -24,11 +24,6 @@ public class BasicNavLogic : MonoBehaviour, IAction
     [Tooltip("How far from the target's actual position we are willing to search for a valid point on the NavMesh.")]
     public float navMeshSearchRadius = 2.0f;
 
-    [Tooltip("How close the agent needs to be to the destination to be considered successful.")]
-    [SerializeField] private float destinationTolerance = 1.0f;
-
-    [SerializeField] private float tolerance = 1.0f;
-
     private NavMeshAgent _agent;
     private Vector3? _lastSetDestination;
 
@@ -64,6 +59,11 @@ public class BasicNavLogic : MonoBehaviour, IAction
             {
                 return NodeStatus.FAILURE;
             }
+        }
+        
+        if (returnSuccessImmediately)
+        {
+            return NodeStatus.SUCCESS;
         }
         
         if (_agent.pathPending)
