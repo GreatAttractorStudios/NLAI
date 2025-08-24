@@ -78,24 +78,10 @@ public class NewSense : MonoBehaviour, ISense
     public bool Evaluate()
     {
         // TODO: Implement your condition-checking logic here.
-        Debug.Log($"Evaluating {Name}");
+        // Your logic should return true if the condition is met, and false otherwise.
 
-        // EXAMPLE IMPLEMENTATIONS:
-
-        // EXAMPLE 1: Simple boolean check
-        // return someCondition;
-
-        // EXAMPLE 2: Distance-based check
-        // GameObject target = GameObject.FindWithTag("Player");
-        // return target != null && Vector3.Distance(transform.position, target.position) < 5f;
-
-        // EXAMPLE 3: Component state check
-        // Health health = GetComponent<Health>();
-        // return health != null && health.currentHealth < health.maxHealth * 0.5f;
-
-        // EXAMPLE 4: Complex condition with multiple factors
-        // return IsTargetVisible() && IsInRange() && HasAmmo();
-
-        return true;
+        // Defaulting to an exception is a safeguard to ensure new senses
+        // are not left incomplete, which could cause unexpected AI behavior.
+        throw new System.NotImplementedException($"The Evaluate method for sense '{Name}' has not been implemented. Please add your logic and return true or false.");
     }
 } 

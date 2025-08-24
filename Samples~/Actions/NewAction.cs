@@ -58,38 +58,13 @@ public class NewAction : MonoBehaviour, IAction
     public NodeStatus Execute()
     {
         // TODO: Implement your action logic here.
-        Debug.Log($"Executing {Name}");
+        // It's crucial to return one of the three statuses:
+        // - NodeStatus.RUNNING: The action is ongoing.
+        // - NodeStatus.SUCCESS: The action has completed successfully.
+        // - NodeStatus.FAILURE: The action could not be completed.
 
-        // EXAMPLE PATTERNS:
-
-        // PATTERN 1: One-shot action (instant completion)
-        // DoSomethingInstant();
-        // return NodeStatus.SUCCESS;
-
-        // PATTERN 2: Time-based action (check completion each frame)
-        // if (IsActionComplete())
-        //     return NodeStatus.SUCCESS;
-        // else
-        //     return NodeStatus.RUNNING;
-
-        // PATTERN 3: Continuous action (runs forever until interrupted)
-        // DoContinuousAction();
-        // return NodeStatus.RUNNING;
-
-        // PATTERN 4: Smart action (checks its own conditions)
-        // if (!AreConditionsStillMet())
-        //     return NodeStatus.FAILURE;  // Let behavior tree try next priority
-        // 
-        // DoContinuousAction();
-        // return NodeStatus.RUNNING;
-
-        // PATTERN 5: Conditional failure
-        // if (CantDoAction())
-        //     return NodeStatus.FAILURE;
-        // 
-        // DoAction();
-        // return IsActionComplete() ? NodeStatus.SUCCESS : NodeStatus.RUNNING;
-
-        return NodeStatus.SUCCESS;
+        // Defaulting to an exception is a safeguard to ensure new actions
+        // are not left incomplete, which could cause unexpected AI behavior.
+        throw new System.NotImplementedException($"The Execute method for action '{Name}' has not been implemented. Please add your logic and return RUNNING, SUCCESS, or FAILURE.");
     }
 } 
