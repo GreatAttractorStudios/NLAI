@@ -9,21 +9,12 @@ public class NLAIEditorWindow : EditorWindow
     private Vector2 _scrollPosition;
     private NLAISettings _settings;
     private GameObject _contextPrefab;
-    private BehaviorTree _selectedTree;
-    private NaturalLanguageBehavior _selectedAgent;
-    private Vector2 _viewerScrollPosition;
-    private bool _resetScrollView;
-    private Dictionary<Node, Rect> _boundsCache;
+
     private string _llmFeedback = "";
     private Vector2 _feedbackScrollPosition;
     private bool _isWaitingForLLM = false;
 
-    // Constants for tree visualization
-    private const float NodeWidth = 150;
-    private const float NodeHeight = 50;
-    private const float HorizontalGap = 20;
-    private const float VerticalGap = 50;
-    private const float Padding = 20;
+
 
     // New options for behavior structure
     private bool _loopBehavior = true;
@@ -44,28 +35,14 @@ public class NLAIEditorWindow : EditorWindow
             .Select(path => AssetDatabase.LoadAssetAtPath<NLAISettings>(path))
             .FirstOrDefault();
         
-        Selection.selectionChanged += OnSelectionChanged;
-        OnSelectionChanged(); // Initial check
+
     }
 
-    private void OnDisable()
-    {
-        Selection.selectionChanged -= OnSelectionChanged;
-    }
+
 
     private void OnGUI()
     {
         DrawGenerationPanel();
-        
-        EditorGUILayout.Space();
-        EditorGUILayout.Space();
-        var separatorRect = GUILayoutUtility.GetRect(GUIContent.none, GUI.skin.horizontalSlider, GUILayout.Height(2));
-        EditorGUI.DrawRect(separatorRect, new Color(0.15f, 0.15f, 0.15f, 1));
-        EditorGUILayout.Space();
-
-        DrawViewerPanel();
-        
-        if (Application.isPlaying) Repaint();
     }
 
     private void DrawGenerationPanel()
@@ -85,23 +62,45 @@ public class NLAIEditorWindow : EditorWindow
         _settings = (NLAISettings)EditorGUILayout.ObjectField("Settings Asset", _settings, typeof(NLAISettings), false);
         
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Behavior Generation Context (Optional)", EditorStyles.boldLabel);
-        _contextPrefab = (GameObject)EditorGUILayout.ObjectField("Context Prefab", _contextPrefab, typeof(GameObject), false);
-        EditorGUILayout.HelpBox("If you assign a prefab, NLAI will only use Actions and Senses from that prefab. If left empty, it will scan all prefabs in the project.", MessageType.Info);
+        EditorGUILayout.LabelField("Target NPC Prefab", EditorStyles.boldLabel);
+        _contextPrefab = (GameObject)EditorGUILayout.ObjectField("NPC Prefab", _contextPrefab, typeof(GameObject), false);
+        
+        if (_contextPrefab == null)
+        {
+            EditorGUILayout.HelpBox("Please assign the NPC prefab that will use this behavior tree. NLAI needs to know what Actions and Senses are available on your specific NPC.", MessageType.Warning);
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("NLAI will generate a behavior tree using only the Actions and Senses found on this prefab.", MessageType.Info);
+        }
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Behavior Structure", EditorStyles.boldLabel);
-        _loopBehavior = EditorGUILayout.Toggle("Loop Behavior", _loopBehavior);
-        _behaviorType = (BehaviorType)EditorGUILayout.EnumPopup("Priority Type", _behaviorType);
+        
+        // Loop Behavior with tooltip
+        GUIContent loopContent = new GUIContent("Loop Behavior", 
+            "When enabled, the behavior tree will continuously loop and restart from the beginning after completion. " +
+            "Disable this for one-time behaviors that should stop after finishing.");
+        _loopBehavior = EditorGUILayout.Toggle(loopContent, _loopBehavior);
+        
+        // Priority Type with tooltip
+        GUIContent priorityContent = new GUIContent("Priority Type", 
+            "Reactive: Continuously re-evaluates all conditions every frame, allowing instant priority changes. " +
+            "Static: Evaluates conditions once and sticks with the chosen behavior until it completes.");
+        _behaviorType = (BehaviorType)EditorGUILayout.EnumPopup(priorityContent, _behaviorType);
         
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Describe Behaviors (in order of priority)", EditorStyles.boldLabel);
         
+        // Create a text area with proper word wrapping and fixed width
+        GUIStyle textAreaStyle = new GUIStyle(EditorStyles.textArea);
+        textAreaStyle.wordWrap = true;
+        
         _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.Height(100));
-        _userInput = EditorGUILayout.TextArea(_userInput, GUILayout.ExpandHeight(true));
+        _userInput = EditorGUILayout.TextArea(_userInput, textAreaStyle, GUILayout.ExpandHeight(true), GUILayout.ExpandWidth(true));
         EditorGUILayout.EndScrollView();
 
-        GUI.enabled = !_isWaitingForLLM;
+        GUI.enabled = !_isWaitingForLLM && _contextPrefab != null;
         if (GUILayout.Button("Generate Behavior Tree"))
         {
             GenerateTree();
@@ -122,225 +121,9 @@ public class NLAIEditorWindow : EditorWindow
         }
     }
 
-    private void DrawViewerPanel()
-    {
-        string viewerTitle = "Behavior Tree Viewer";
-        if (_selectedTree != null)
-        {
-            viewerTitle += $" ({_selectedTree.name})";
-        }
-        EditorGUILayout.LabelField(viewerTitle, EditorStyles.boldLabel);
 
-        // Use GUILayoutUtility to get a flexible rect for the scroll view.
-        Rect viewArea = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.ExpandWidth(true), GUILayout.MinHeight(400));
 
-        if (_selectedTree == null)
-        {
-            GUI.Label(viewArea, "Select a BehaviorTree asset or an agent in the scene to view.", EditorStyles.centeredGreyMiniLabel);
-            return;
-        }
 
-        if (_selectedTree.rootNode == null)
-        {
-            GUI.Label(viewArea, "This BehaviorTree has no root node.", EditorStyles.centeredGreyMiniLabel);
-            return;
-        }
-        
-        if (_boundsCache == null) _boundsCache = new Dictionary<Node, Rect>();
-
-        // Define a dynamic content area for the tree based on its calculated size.
-        Rect treeBounds = CalculateTreeBounds(_selectedTree.rootNode);
-        Rect contentRect = new Rect(0, 0, treeBounds.width + Padding * 2, treeBounds.height + Padding * 2);
-
-        // If a new tree has been selected, reset the scroll position to center the root node.
-        if (_resetScrollView && Event.current.type == EventType.Layout)
-        {
-            _viewerScrollPosition = new Vector2((contentRect.width - viewArea.width) / 2, 0);
-            _resetScrollView = false;
-        }
-
-        _viewerScrollPosition = GUI.BeginScrollView(viewArea, _viewerScrollPosition, contentRect);
-
-        // Draw the nodes recursively, starting at the top-center of our content area.
-        float rootDrawX = -treeBounds.x + Padding;
-        DrawNode(_selectedTree.rootNode, new Vector2(rootDrawX, Padding));
-        
-        GUI.EndScrollView();
-    }
-    
-    private void DrawNode(Node node, Vector2 position)
-    {
-        // Define the size and style of the node box
-        Rect nodeRect = new Rect(position.x - NodeWidth / 2, position.y, NodeWidth, NodeHeight);
-
-        // Set color based on the node's status if an agent is selected
-        GUIStyle style = new GUIStyle(GUI.skin.box);
-        if (_selectedAgent != null && Application.isPlaying)
-        {
-            Node runtimeNode = _selectedAgent.allNodes.Find(n => n.guid == node.guid);
-            if (runtimeNode != null)
-            {
-                switch (runtimeNode.status)
-                {
-                    case NodeStatus.SUCCESS:
-                        style.normal.background = MakeTex(2, 2, new Color(0.2f, 0.8f, 0.2f, 1f)); // Green
-                        break;
-                    case NodeStatus.RUNNING:
-                        style.normal.background = MakeTex(2, 2, new Color(0.9f, 0.9f, 0.2f, 1f)); // Yellow
-                        break;
-                    case NodeStatus.FAILURE:
-                        style.normal.background = MakeTex(2, 2, new Color(0.8f, 0.2f, 0.2f, 1f)); // Red
-                        break;
-                }
-            }
-        }
-
-        GUI.Box(nodeRect, GetNodeTitle(node), style);
-
-        var children = GetChildren(node);
-        if (children == null || children.Count == 0) return;
-
-        var childPositions = GetChildPositions(node, position);
-        for (int i = 0; i < children.Count; i++)
-        {
-            Vector2 childPosition = childPositions[i];
-            DrawConnection(nodeRect, new Rect(childPosition.x, childPosition.y, 0, 0));
-            DrawNode(children[i], childPosition);
-        }
-    }
-    
-    private void DrawConnection(Rect start, Rect end)
-    {
-        Vector3 startPos = new Vector3(start.x + start.width / 2, start.y + start.height, 0);
-        Vector3 endPos = new Vector3(end.x, end.y, 0);
-        Vector3 startTan = startPos + Vector3.up * (VerticalGap * 0.75f);
-        Vector3 endTan = endPos + Vector3.down * (VerticalGap * 0.75f);
-        Handles.DrawBezier(startPos, endPos, endTan, startTan, Color.gray, null, 2f);
-    }
-
-    private List<Node> GetChildren(Node parent)
-    {
-        if (parent is CompositeNode composite) return composite.children;
-        if (parent is RootNode root && root.child != null) return new List<Node> { root.child };
-        if (parent is InverterNode inverter && inverter.child != null) return new List<Node> { inverter.child };
-        return null;
-    }
-
-    private string GetNodeTitle(Node node)
-    {
-        if (node is ActionNode action) return $"Action:\n{action.actionName}";
-        if (node is SenseNode sense) return $"Sense:\n{sense.senseName}";
-        return node.GetType().Name;
-    }
-    
-    private Rect CalculateTreeBounds(Node rootNode)
-    {
-        if (rootNode == null) return Rect.zero;
-        if (_boundsCache.ContainsKey(rootNode)) return _boundsCache[rootNode];
-
-        Rect bounds = new Rect(0,0,0,0);
-        MeasureNode(rootNode, Vector2.zero, ref bounds);
-        
-        _boundsCache[rootNode] = bounds;
-        return bounds;
-    }
-
-    private void MeasureNode(Node node, Vector2 position, ref Rect bounds)
-    {
-        if (node == null) return;
-        
-        var nodeRect = new Rect(position.x - NodeWidth / 2, position.y, NodeWidth, NodeHeight);
-
-        if (bounds.width == 0) // First node
-        {
-            bounds = nodeRect;
-        }
-        else
-        {
-            bounds = Rect.MinMaxRect(
-                Mathf.Min(bounds.xMin, nodeRect.xMin),
-                Mathf.Min(bounds.yMin, nodeRect.yMin),
-                Mathf.Max(bounds.xMax, nodeRect.xMax),
-                Mathf.Max(bounds.yMax, nodeRect.yMax));
-        }
-        
-        var children = GetChildren(node);
-        if (children == null || children.Count == 0) return;
-
-        var childPositions = GetChildPositions(node, position);
-        for (int i = 0; i < children.Count; i++)
-        {
-            MeasureNode(children[i], childPositions[i], ref bounds);
-        }
-    }
-    
-    private List<Vector2> GetChildPositions(Node parentNode, Vector2 parentPosition)
-    {
-        var positions = new List<Vector2>();
-        var children = GetChildren(parentNode);
-        if (children == null || children.Count == 0) return positions;
-
-        List<Rect> childBounds = children.Select(c => CalculateTreeBounds(c)).ToList();
-        float totalWidth = childBounds.Sum(b => b.width) + Mathf.Max(0, children.Count - 1) * HorizontalGap;
-        
-        float currentX = parentPosition.x - totalWidth / 2;
-
-        for (int i = 0; i < children.Count; i++)
-        {
-            Rect childBound = childBounds[i];
-            
-            // Position the child's origin so its subtree is correctly placed.
-            Vector2 childPosition = new Vector2(currentX - childBound.x + childBound.width / 2, parentPosition.y + NodeHeight + VerticalGap);
-            positions.Add(childPosition);
-
-            currentX += childBound.width + HorizontalGap;
-        }
-        return positions;
-    }
-    
-    private Texture2D MakeTex(int width, int height, Color col)
-    {
-        Color[] pix = new Color[width * height];
-        for (int i = 0; i < pix.Length; ++i)
-        {
-            pix[i] = col;
-        }
-        Texture2D result = new Texture2D(width, height);
-        result.SetPixels(pix);
-        result.Apply();
-        return result;
-    }
-
-    private void OnSelectionChanged()
-    {
-        bool changed = false;
-        if (Selection.activeObject is BehaviorTree tree)
-        {
-            if (_selectedTree != tree)
-            {
-                _selectedTree = tree;
-                _selectedAgent = null; // Clear agent if we select a new tree asset
-                changed = true;
-            }
-        }
-        else if (Selection.activeGameObject != null)
-        {
-            var agent = Selection.activeGameObject.GetComponent<NaturalLanguageBehavior>();
-            if (agent != null && agent.behaviorTree != _selectedTree)
-            {
-                _selectedTree = agent.behaviorTree;
-                _selectedAgent = agent;
-                changed = true;
-            }
-        }
-        
-        if (changed)
-        {
-            if (_boundsCache != null) _boundsCache.Clear();
-            _resetScrollView = true;
-            Repaint();
-        }
-    }
 
     private void CreateSettingsAsset()
     {
@@ -364,38 +147,16 @@ public class NLAIEditorWindow : EditorWindow
 
     private async void GenerateTree()
     {
-        List<string> senses;
-        List<string> actions;
-
-        if (_contextPrefab != null)
-        {
-            // Context-specific scan
-            senses = _contextPrefab.GetComponentsInChildren<ISense>(true)
-                .Select(s => s.Name)
-                .Where(name => !string.IsNullOrEmpty(name))
-                .Distinct().ToList();
-            actions = _contextPrefab.GetComponentsInChildren<IAction>(true)
-                .Select(a => a.Name)
-                .Where(name => !string.IsNullOrEmpty(name))
-                .Distinct().ToList();
-        }
-        else
-        {
-            // Global scan
-            senses = FindAllMonoBehavioursInPrefabs()
-                .OfType<ISense>()
-                .Select(s => s.Name)
-                .Where(name => !string.IsNullOrEmpty(name))
-                .Distinct()
-                .ToList();
+        // Scan the assigned NPC prefab for available actions and senses
+        List<string> senses = _contextPrefab.GetComponentsInChildren<ISense>(true)
+            .Select(s => s.Name)
+            .Where(name => !string.IsNullOrEmpty(name))
+            .Distinct().ToList();
             
-            actions = FindAllMonoBehavioursInPrefabs()
-                .OfType<IAction>()
-                .Select(a => a.Name)
-                .Where(name => !string.IsNullOrEmpty(name))
-                .Distinct()
-                .ToList();
-        }
+        List<string> actions = _contextPrefab.GetComponentsInChildren<IAction>(true)
+            .Select(a => a.Name)
+            .Where(name => !string.IsNullOrEmpty(name))
+            .Distinct().ToList();
         
         Debug.Log($"Using Senses: {string.Join(", ", senses)}");
         Debug.Log($"Using Actions: {string.Join(", ", actions)}");
@@ -480,14 +241,5 @@ public class NLAIEditorWindow : EditorWindow
             }
         }
     }
-    
-    public static List<MonoBehaviour> FindAllMonoBehavioursInPrefabs()
-    {
-        return AssetDatabase.FindAssets("t:Prefab")
-            .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-            .Select(path => AssetDatabase.LoadAssetAtPath<GameObject>(path))
-            .Where(prefab => prefab != null)
-            .SelectMany(prefab => prefab.GetComponentsInChildren<MonoBehaviour>(true))
-            .ToList();
-    }
+
 } 

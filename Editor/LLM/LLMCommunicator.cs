@@ -7,12 +7,12 @@ using UnityEditor;
 public static class LLMCommunicator
 {
     public static async System.Threading.Tasks.Task<(Node tree, string feedback)> ConvertDescriptionToTree(
-    string description,
-    bool loop,
-    bool isReactive,
-    List<string> senses,
-    List<string> actions,
-    NLAISettings settings)
+        string description,
+        bool loop,
+        bool isReactive,
+        List<string> senses,
+        List<string> actions,
+        NLAISettings settings)
     {
         if (settings == null || string.IsNullOrEmpty(settings.apiKey))
         {
@@ -74,9 +74,9 @@ The feedback must be a clear, user-friendly guide on how to create the missing c
 4.  If the user asks for a complex behavior like 'patrolling', explain how they could build a dedicated, intelligent Action for it.
 
 For example, if the user asks for the character to 'flee' and 'patrol':
-{{
+    {{
 ""feedback"": ""It looks like you want an AI that can patrol and flee. To do that, you'll need a few new components:\n\n1.  **A Sense for Low Health:** This would be a Sense component that needs a reference to a 'Health' script. Its job is to check if the current health is below a certain percentage and return SUCCESS if it is.\n\n2.  **A 'Flee' Action:** This would be an Action component. It would need a reference to the enemy's location and a list of safe points. Its logic would find the safest point farthest from the enemy and tell the NavMeshAgent to move there.\n\n3.  **A 'Patrol' Action:** For a continuous patrol, it's best to create a dedicated Action. This component would hold a list of waypoint transforms. Its logic would be to move to the next waypoint in the list each time it arrives at one, creating a continuous loop.""
-}}
+    }}
 
 {promptHeader}
 The user will describe the branches of the main {rootNodeType}. You must assemble these into a valid tree.

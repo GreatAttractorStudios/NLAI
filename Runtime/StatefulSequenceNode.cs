@@ -24,20 +24,23 @@ public class StatefulSequenceNode : CompositeNode
         {
             var childStatus = children[i].Execute(agent);
 
-            if (childStatus == NodeStatus.FAILURE)
+            switch (childStatus)
             {
-                _lastRunningChildIndex = 0;
-                return NodeStatus.FAILURE;
-            }
-
-            if (childStatus == NodeStatus.RUNNING)
-            {
-                _lastRunningChildIndex = i;
-                return NodeStatus.RUNNING;
+                case NodeStatus.FAILURE:
+                    _lastRunningChildIndex = 0; // Reset on failure
+                    return NodeStatus.FAILURE;
+                
+                case NodeStatus.RUNNING:
+                    _lastRunningChildIndex = i; // Remember running child
+                    return NodeStatus.RUNNING;
+                
+                case NodeStatus.SUCCESS:
+                    continue; // Continue to the next child
             }
         }
         
-        _lastRunningChildIndex = 0;
+        // If the loop completes, the entire sequence was successful
+        _lastRunningChildIndex = 0; // Reset for the next run
         return NodeStatus.SUCCESS;
     }
 } 
