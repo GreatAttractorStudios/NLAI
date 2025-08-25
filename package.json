@@ -5,7 +5,7 @@
   "description": "A tool for generating NPC behavior trees from natural language descriptions.",
   "unity": "2022.3",
   "author": {
-    "name": "NLNPC User",
+    "name": "Great Attractor Studios",
     "url": ""
   },
   "samples": [
