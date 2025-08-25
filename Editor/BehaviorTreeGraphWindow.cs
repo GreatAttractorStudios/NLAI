@@ -12,7 +12,6 @@ public class BehaviorTreeGraphWindow : EditorWindow
     private BehaviorTreeGraphView graphView;
     private Toolbar toolbar;
 
-    [MenuItem("Window/NLNPC/Behavior Tree Visualizer")]
     public static void OpenWindow()
     {
         var window = GetWindow<BehaviorTreeGraphWindow>();
