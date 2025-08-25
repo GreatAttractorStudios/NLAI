@@ -1,5 +1,5 @@
 {
-  "name": "com.yourcompany.nlnpc",
+  "name": "com.GreatAttractorStudios.nlnpc",
   "version": "0.1.0-beta.1",
   "displayName": "Natural Language NPC",
   "description": "A tool for generating NPC behavior trees from natural language descriptions.",
