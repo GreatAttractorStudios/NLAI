@@ -1,4 +1,4 @@
-# Natural Language AI (NLAI)
+# Natural Language NPC (NLNPC)
 
 This package provides a powerful and intuitive system for generating NPC behavior trees in Unity using natural language descriptions.
 
@@ -12,8 +12,8 @@ This package provides a powerful and intuitive system for generating NPC behavio
 
 ## Getting Started
 
-1.  Open the NLAI Editor via `Window > NLAI Editor`.
-2.  Create and/or assign an `NLAISettings` asset.
+1.  Open the NLNPC Editor via `Window > NLNPC Editor`.
+2.  Create and/or assign an `NLNPCSettings` asset.
 3.  Add `IAction` and `ISense` components to a GameObject prefab.
 4.  Optionally, assign that prefab to the "Context Prefab" field in the editor.
 5.  Describe the desired behavior and click "Generate Behavior Tree". 

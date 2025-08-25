@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Behavior Tree", menuName = "NLAI/Behavior Tree/Tree", order = -1)]
+[CreateAssetMenu(fileName = "New Behavior Tree", menuName = "NLNPC/Behavior Tree/Tree", order = -1)]
 public class BehaviorTree : ScriptableObject
 {
     public Node rootNode;

@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public static class NLAIEdHttp
+public static class NLNPCEdHttp
 {
     private class LLMRequest
     {
@@ -25,7 +25,7 @@ public static class NLAIEdHttp
         public string content;
     }
     
-    public static async Task<(bool, string)> InvokeLLM(string systemPrompt, string userMessage, NLAISettings settings)
+    public static async Task<(bool, string)> InvokeLLM(string systemPrompt, string userMessage, NLNPCSettings settings)
     {
         var requestBody = new LLMRequest
         {

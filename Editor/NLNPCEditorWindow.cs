@@ -3,11 +3,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NLAIEditorWindow : EditorWindow
+public class NLNPCEditorWindow : EditorWindow
 {
     private string _userInput = "Patrol between two points, but chase the player if they are visible.";
     private Vector2 _scrollPosition;
-    private NLAISettings _settings;
+    private NLNPCSettings _settings;
     private GameObject _contextPrefab;
 
     private string _llmFeedback = "";
@@ -21,18 +21,18 @@ public class NLAIEditorWindow : EditorWindow
     private enum BehaviorType { Reactive, Static }
     private BehaviorType _behaviorType = BehaviorType.Reactive;
 
-    [MenuItem("Window/NLAI Editor")]
+    [MenuItem("Window/NLNPC Editor")]
     public static void ShowWindow()
     {
-        GetWindow<NLAIEditorWindow>("NLAI Editor");
+        GetWindow<NLNPCEditorWindow>("NLNPC Editor");
     }
 
     private void OnEnable()
     {
         // Find existing settings or prompt to create one
-        _settings = AssetDatabase.FindAssets("t:NLAISettings")
+        _settings = AssetDatabase.FindAssets("t:NLNPCSettings")
             .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-            .Select(path => AssetDatabase.LoadAssetAtPath<NLAISettings>(path))
+            .Select(path => AssetDatabase.LoadAssetAtPath<NLNPCSettings>(path))
             .FirstOrDefault();
         
 
@@ -47,19 +47,19 @@ public class NLAIEditorWindow : EditorWindow
 
     private void DrawGenerationPanel()
     {
-        EditorGUILayout.LabelField("NLAI Settings", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("NLNPC Settings", EditorStyles.boldLabel);
 
         if (_settings == null)
         {
-            EditorGUILayout.HelpBox("NLAI Settings asset not found. Please create one.", MessageType.Warning);
-            if (GUILayout.Button("Create NLAI Settings"))
+            EditorGUILayout.HelpBox("NLNPC Settings asset not found. Please create one.", MessageType.Warning);
+            if (GUILayout.Button("Create NLNPC Settings"))
             {
                 CreateSettingsAsset();
             }
             return;
         }
 
-        _settings = (NLAISettings)EditorGUILayout.ObjectField("Settings Asset", _settings, typeof(NLAISettings), false);
+        _settings = (NLNPCSettings)EditorGUILayout.ObjectField("Settings Asset", _settings, typeof(NLNPCSettings), false);
         
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Target NPC Prefab", EditorStyles.boldLabel);
@@ -67,11 +67,11 @@ public class NLAIEditorWindow : EditorWindow
         
         if (_contextPrefab == null)
         {
-            EditorGUILayout.HelpBox("Please assign the NPC prefab that will use this behavior tree. NLAI needs to know what Actions and Senses are available on your specific NPC.", MessageType.Warning);
+            EditorGUILayout.HelpBox("Please assign the NPC prefab that will use this behavior tree. NLNPC needs to know what Actions and Senses are available on your specific NPC.", MessageType.Warning);
         }
         else
         {
-            EditorGUILayout.HelpBox("NLAI will generate a behavior tree using only the Actions and Senses found on this prefab.", MessageType.Info);
+            EditorGUILayout.HelpBox("NLNPC will generate a behavior tree using only the Actions and Senses found on this prefab.", MessageType.Info);
         }
 
         EditorGUILayout.Space();
@@ -127,18 +127,18 @@ public class NLAIEditorWindow : EditorWindow
 
     private void CreateSettingsAsset()
     {
-        NLAISettings newSettings = CreateInstance<NLAISettings>();
+        NLNPCSettings newSettings = CreateInstance<NLNPCSettings>();
         
-        if (!AssetDatabase.IsValidFolder("Assets/NLAI"))
+        if (!AssetDatabase.IsValidFolder("Assets/NLNPC"))
         {
-            AssetDatabase.CreateFolder("Assets", "NLAI");
+            AssetDatabase.CreateFolder("Assets", "NLNPC");
         }
-        if (!AssetDatabase.IsValidFolder("Assets/NLAI/GeneratedTrees"))
+        if (!AssetDatabase.IsValidFolder("Assets/NLNPC/GeneratedTrees"))
         {
-            AssetDatabase.CreateFolder("Assets/NLAI", "GeneratedTrees");
+            AssetDatabase.CreateFolder("Assets/NLNPC", "GeneratedTrees");
         }
 
-        AssetDatabase.CreateAsset(newSettings, "Assets/NLAI/New NLAI Settings.asset");
+        AssetDatabase.CreateAsset(newSettings, "Assets/NLNPC/New NLNPC Settings.asset");
         AssetDatabase.SaveAssets();
         _settings = newSettings;
         Selection.activeObject = newSettings;
@@ -199,7 +199,7 @@ public class NLAIEditorWindow : EditorWindow
                     "NewBehaviorTree",
                     "asset",
                     "Please enter a file name to save the behavior tree to.",
-                    "Assets/NLAI/GeneratedTrees");
+                    "Assets/NLNPC/GeneratedTrees");
 
                 if (!string.IsNullOrEmpty(path))
                 {

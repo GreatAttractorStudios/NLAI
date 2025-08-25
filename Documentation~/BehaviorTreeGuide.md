@@ -1,6 +1,6 @@
 # Behavior Tree Execution Guide
 
-This guide explains how behavior trees work in the NLAI system, when to use different patterns, and how to make your AI behaviors smart and reliable.
+This guide explains how behavior trees work in the NLNPC system, when to use different patterns, and how to make your AI behaviors smart and reliable.
 
 ## Core Concepts
 

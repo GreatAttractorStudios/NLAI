@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New NLAI Settings", menuName = "NLAI/NLAI Settings", order = 0)]
-public class NLAISettings : ScriptableObject
+[CreateAssetMenu(fileName = "New NLNPC Settings", menuName = "NLNPC/NLNPC Settings", order = 0)]
+public class NLNPCSettings : ScriptableObject
 {
     [Tooltip("The API key for the LLM service.")]
     public string apiKey;

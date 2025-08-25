@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "Action", menuName = "NLAI/Behavior Tree/Action", order = 5)]
+[CreateAssetMenu(fileName = "Action", menuName = "NLNPC/Behavior Tree/Action", order = 5)]
 public class ActionNode : Node
 {
     public string actionName;

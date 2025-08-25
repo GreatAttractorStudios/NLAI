@@ -1,7 +1,9 @@
 {
-    "name": "NLAI.Runtime",
+    "name": "NLNPC.Samples",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "NLNPC.Runtime"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

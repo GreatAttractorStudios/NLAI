@@ -1,10 +1,12 @@
 {
-    "name": "NLAI.Samples",
+    "name": "NLNPC.Editor",
     "rootNamespace": "",
     "references": [
-        "NLAI.Runtime"
+        "NLNPC.Runtime"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -1,17 +1,17 @@
 {
-  "name": "com.yourcompany.nlai",
+  "name": "com.yourcompany.nlnpc",
   "version": "0.1.0-beta.1",
-  "displayName": "Natural Language AI",
+  "displayName": "Natural Language NPC",
   "description": "A tool for generating NPC behavior trees from natural language descriptions.",
   "unity": "2022.3",
   "author": {
-    "name": "NLAI User",
+    "name": "NLNPC User",
     "url": ""
   },
   "samples": [
     {
       "displayName": "Example Actions and Senses",
-      "description": "Contains a collection of useful example components to get started with NLAI.",
+      "description": "Contains a collection of useful example components to get started with NLNPC.",
       "path": "Samples~"
     }
   ],

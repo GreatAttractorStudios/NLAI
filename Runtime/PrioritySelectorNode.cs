@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// This allows a high-priority task to interrupt a running low-priority task.
 /// It will execute children in order until one of them returns SUCCESS or RUNNING.
 /// </summary>
-[CreateAssetMenu(fileName = "PrioritySelector", menuName = "NLAI/Behavior Tree/Priority Selector", order = 1)]
+[CreateAssetMenu(fileName = "PrioritySelector", menuName = "NLNPC/Behavior Tree/Priority Selector", order = 1)]
 public class PrioritySelectorNode : CompositeNode
 {
     public override NodeStatus Execute(GameObject agent)

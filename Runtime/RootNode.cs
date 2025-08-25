@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Root", menuName = "NLAI/Behavior Tree/Root", order = 0)]
+[CreateAssetMenu(fileName = "Root", menuName = "NLNPC/Behavior Tree/Root", order = 0)]
 public class RootNode : Node
 {
     public Node child;

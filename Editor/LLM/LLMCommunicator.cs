@@ -12,11 +12,11 @@ public static class LLMCommunicator
         bool isReactive,
         List<string> senses,
         List<string> actions,
-        NLAISettings settings)
+        NLNPCSettings settings)
     {
         if (settings == null || string.IsNullOrEmpty(settings.apiKey))
         {
-            Debug.LogError("API key is not set. Please set it in the NLAI Settings.");
+            Debug.LogError("API key is not set. Please set it in the NLNPC Settings.");
             return (null, null);
         }
 
@@ -92,7 +92,7 @@ JSON Structure Rules:
 - Root and Inverter nodes MUST have a single 'child' property containing their child node.
 - PrioritySelector and StatefulSequence nodes MUST have a 'children' property, which is an array of their child nodes.";
 
-        var (success, jsonResponse) = await NLAIEdHttp.InvokeLLM(systemPrompt, description, settings);
+        var (success, jsonResponse) = await NLNPCEdHttp.InvokeLLM(systemPrompt, description, settings);
 
         if (!success)
         {
