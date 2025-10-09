@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// An ISense that checks if a character's health is below a certain percentage.

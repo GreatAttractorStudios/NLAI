@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using NLNPC;
 
 /// <summary>
 /// An IAction that moves a NavMeshAgent to a specified target.

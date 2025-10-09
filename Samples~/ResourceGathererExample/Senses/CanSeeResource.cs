@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Sense to check if there is a resource within a specified range.

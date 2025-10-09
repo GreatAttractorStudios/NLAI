@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Action to "gather" a resource. This destroys the target GameObject

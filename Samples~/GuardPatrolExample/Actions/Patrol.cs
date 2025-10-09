@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using NLNPC;
 
 /// <summary>
 /// An IAction that moves a NavMeshAgent through a series of waypoints.

@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// A simple, reliable enemy detection component.

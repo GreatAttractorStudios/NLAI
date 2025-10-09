@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// An ISense that acts as a simple timer or cooldown. It returns false until the

@@ -1,10 +1,11 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Sense to check if the AI is currently holding a resource.
 /// It queries the GathererAI state script.
 /// </summary>
-public class HasResource : MonoBehaviour, ISense
+public class HasResource : MonoBehaviour, NLNPC.ISense
 {
     [Tooltip("A unique name for this sense. The LLM uses this to identify the sense in the behavior tree.")]
     [SerializeField] private string _name;

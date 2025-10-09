@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using NLNPC;
 
 /// <summary>
 /// An IAction that finds the farthest point from a specified enemy and flees there.

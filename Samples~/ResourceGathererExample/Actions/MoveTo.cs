@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Action to move the AI to its currently assigned target using the NavMeshAgent.

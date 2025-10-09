@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
+using NLNPC;
 
 /// <summary>
 /// Action to make the AI wander to a random point within a specified radius.
 /// This serves as a fallback behavior when the AI has no other tasks.
 /// </summary>
-public class Wander : MonoBehaviour, IAction
+public class Wander : MonoBehaviour, NLNPC.IAction
 {
     [Tooltip("A unique name for this action. The LLM uses this to identify the action in the behavior tree.")]
     [SerializeField] private string _name;
@@ -32,7 +33,7 @@ public class Wander : MonoBehaviour, IAction
     /// - Returns SUCCESS upon arrival.
     /// - Returns FAILURE if it can't find a valid point on the NavMesh.
     /// </summary>
-    public NodeStatus Execute()
+    public NLNPC.NodeStatus Execute()
     {
         if (!hasDestination)
         {

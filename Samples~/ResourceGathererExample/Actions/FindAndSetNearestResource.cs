@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Action to find the nearest GameObject with the "Resource" tag and set it as the AI's target.

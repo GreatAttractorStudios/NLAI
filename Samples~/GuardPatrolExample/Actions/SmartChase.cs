@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using NLNPC;
 
 /// <summary>
 /// An intelligent Chase action that continuously checks line of sight while chasing.

@@ -1,4 +1,5 @@
 using UnityEngine;
+using NLNPC;
 
 /// <summary>
 /// Sense to check if the AI's resource count has reached a specific threshold.
