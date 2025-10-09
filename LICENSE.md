@@ -1,21 +1,29 @@
-MIT License
+# NLNPC License
 
-Copyright (c) 2025 Your Name
+Copyright (c) 2025 Great Attractor Studios
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## Asset Store License
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software is licensed under the Unity Asset Store End User License Agreement (Asset Store EULA).
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. 
+By purchasing and using this asset, you agree to the terms and conditions outlined in Unity's Asset Store EULA, which can be found at:
+https://unity3d.com/legal/as_terms
+
+## Key Terms Summary:
+
+- **Commercial Use**: You may use this asset in commercial projects
+- **Modification**: You may modify the asset for your own use
+- **Distribution**: You may NOT redistribute or resell this asset or its source code
+- **Single License**: Each license covers one individual or organization
+- **Support**: Support is provided as-is with no warranty
+
+## Restrictions:
+
+- You may NOT share, distribute, or resell this asset or its source code
+- You may NOT upload this asset to public repositories or version control systems accessible by others who have not purchased it
+- You may NOT create derivative works for distribution or sale
+- Source code access is for customization purposes only within your licensed projects
+
+For complete terms and conditions, please refer to the Unity Asset Store EULA.
+
+For support or licensing questions, contact: [greatattractorstudios@gmail.com] 
