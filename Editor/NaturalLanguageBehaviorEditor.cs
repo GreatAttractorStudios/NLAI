@@ -1,8 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(NaturalLanguageBehavior))]
-public class NaturalLanguageBehaviorEditor : Editor
+namespace NLNPC.Editor
+{
+    [CustomEditor(typeof(NaturalLanguageBehavior))]
+    public class NaturalLanguageBehaviorEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -94,4 +96,5 @@ public class NaturalLanguageBehaviorEditor : Editor
 
         EditorGUILayout.EndVertical();
     }
+}
 } 

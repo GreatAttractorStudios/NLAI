@@ -3,7 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NLNPCEditorWindow : EditorWindow
+namespace NLNPC.Editor
+{
+    public class NLNPCEditorWindow : EditorWindow
 {
     private string _userInput = "Patrol between two points, but chase the player if they are visible.";
     private Vector2 _scrollPosition;
@@ -242,4 +244,5 @@ public class NLNPCEditorWindow : EditorWindow
         }
     }
 
+}
 } 

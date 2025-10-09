@@ -6,7 +6,9 @@ using UnityEditor.UIElements;
 using System.Collections.Generic;
 using System.Linq;
 
-public class BehaviorTreeGraphWindow : EditorWindow
+namespace NLNPC.Editor
+{
+    public class BehaviorTreeGraphWindow : EditorWindow
 {
     private BehaviorTree behaviorTree;
     private BehaviorTreeGraphView graphView;
@@ -318,4 +320,5 @@ public class BehaviorTreeNode : UnityEditor.Experimental.GraphView.Node
             titleContainer.style.backgroundColor = new Color(0.9f, 0.7f, 0.9f, 0.8f); // Lighter magenta/pink
         }
     }
+}
 } 

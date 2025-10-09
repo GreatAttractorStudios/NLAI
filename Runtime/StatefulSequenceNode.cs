@@ -1,11 +1,13 @@
 using UnityEngine;
 
-/// <summary>
-/// A sequence node that remembers its last running child and resumes from it.
-/// If a child returns FAILURE, it resets and starts from the beginning on the next evaluation.
-/// </summary>
-[CreateAssetMenu(fileName = "StatefulSequence", menuName = "NLNPC/Behavior Tree/Stateful Sequence", order = 3)]
-public class StatefulSequenceNode : CompositeNode
+namespace NLNPC
+{
+    /// <summary>
+    /// A sequence node that remembers its last running child and resumes from it.
+    /// If a child returns FAILURE, it resets and starts from the beginning on the next evaluation.
+    /// </summary>
+    [CreateAssetMenu(fileName = "StatefulSequence", menuName = "NLNPC/Behavior Tree/Stateful Sequence", order = 3)]
+    public class StatefulSequenceNode : CompositeNode
 {
     private int _lastRunningChildIndex = 0;
 
@@ -43,4 +45,5 @@ public class StatefulSequenceNode : CompositeNode
         _lastRunningChildIndex = 0; // Reset for the next run
         return NodeStatus.SUCCESS;
     }
+}
 } 

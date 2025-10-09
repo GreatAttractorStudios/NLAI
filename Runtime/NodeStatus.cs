@@ -1,6 +1,11 @@
-public enum NodeStatus
+using UnityEngine;
+
+namespace NLNPC
 {
-    SUCCESS,
-    FAILURE,
-    RUNNING
+    public enum NodeStatus
+    {
+        SUCCESS,
+        FAILURE,
+        RUNNING
+    }
 } 

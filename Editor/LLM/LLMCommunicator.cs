@@ -4,7 +4,9 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
 
-public static class LLMCommunicator
+namespace NLNPC.Editor
+{
+    public static class LLMCommunicator
 {
     public static async System.Threading.Tasks.Task<(Node tree, string feedback)> ConvertDescriptionToTree(
         string description,
@@ -204,4 +206,5 @@ JSON Structure Rules:
         
         return node;
     }
+}
 } 

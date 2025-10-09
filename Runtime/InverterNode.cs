@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class InverterNode : Node
+namespace NLNPC
+{
+    public class InverterNode : Node
 {
     public Node child;
 
@@ -20,4 +22,5 @@ public class InverterNode : Node
                 return status = childStatus; // Running
         }
     }
+}
 } 

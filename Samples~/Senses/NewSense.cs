@@ -1,29 +1,31 @@
 using UnityEngine;
 
-/// <summary>
-/// BOILERPLATE for creating a new Sense.
-/// Senses are the "eyes and ears" of your AI - what it can PERCEIVE.
-/// Examples: CanSeeEnemy, IsHealthLow, HasKey, IsPlayerNear, IsAtDestination.
-/// 
-/// CRITICAL BEHAVIOR TREE CONCEPTS:
-/// 
-/// 1. SENSES ARE CALLED EVERY FRAME: Your Evaluate() is called repeatedly!
-///    - In PrioritySelector: ALL senses are checked every frame
-///    - In StatefulSequence: Sense is checked once, then action runs until completion
-/// 
-/// 2. WHEN TO RETURN TRUE/FALSE:
-///    - true: "The condition IS met right now" (becomes NodeStatus.SUCCESS)
-///    - false: "The condition is NOT met right now" (becomes NodeStatus.FAILURE)
-/// 
-/// 3. BEHAVIOR TREE FLOW CONTROL:
-///    - PrioritySelector: First sense that returns true wins, runs its action
-///    - StatefulSequence: If sense returns false, whole sequence fails and resets
-/// 
-/// 4. SMART SENSES vs SIMPLE SENSES:
-///    - Simple: Just check current state (IsHealthLow, CanSeeEnemy)
-///    - Smart: Track state over time (HasLostTarget, TimerElapsed)
-/// </summary>
-public class NewSense : MonoBehaviour, ISense
+namespace NLNPC.Samples
+{
+    /// <summary>
+    /// BOILERPLATE for creating a new Sense.
+    /// Senses are the "eyes and ears" of your AI - what it can PERCEIVE.
+    /// Examples: CanSeeEnemy, IsHealthLow, HasKey, IsPlayerNear, IsAtDestination.
+    /// 
+    /// CRITICAL BEHAVIOR TREE CONCEPTS:
+    /// 
+    /// 1. SENSES ARE CALLED EVERY FRAME: Your Evaluate() is called repeatedly!
+    ///    - In PrioritySelector: ALL senses are checked every frame
+    ///    - In StatefulSequence: Sense is checked once, then action runs until completion
+    /// 
+    /// 2. WHEN TO RETURN TRUE/FALSE:
+    ///    - true: "The condition IS met right now" (becomes NodeStatus.SUCCESS)
+    ///    - false: "The condition is NOT met right now" (becomes NodeStatus.FAILURE)
+    /// 
+    /// 3. BEHAVIOR TREE FLOW CONTROL:
+    ///    - PrioritySelector: First sense that returns true wins, runs its action
+    ///    - StatefulSequence: If sense returns false, whole sequence fails and resets
+    /// 
+    /// 4. SMART SENSES vs SIMPLE SENSES:
+    ///    - Simple: Just check current state (IsHealthLow, CanSeeEnemy)
+    ///    - Smart: Track state over time (HasLostTarget, TimerElapsed)
+    /// </summary>
+    public class NewSense : MonoBehaviour, ISense
 {
     [Tooltip("A unique name for this sense. The LLM uses this to identify the sense in the behavior tree.")]
     [SerializeField] private string _name;
@@ -84,4 +86,5 @@ public class NewSense : MonoBehaviour, ISense
         // are not left incomplete, which could cause unexpected AI behavior.
         throw new System.NotImplementedException($"The Evaluate method for sense '{Name}' has not been implemented. Please add your logic and return true or false.");
     }
+}
 } 

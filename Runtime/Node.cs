@@ -1,24 +1,27 @@
 using UnityEngine;
 
-public abstract class Node : ScriptableObject
+namespace NLNPC
 {
-    [HideInInspector] public NodeStatus status = NodeStatus.SUCCESS;
-    [HideInInspector] public string guid;
-
-    public virtual NodeStatus Execute(GameObject agent)
+    public abstract class Node : ScriptableObject
     {
-        // Default implementation does nothing, can be overridden.
-        return NodeStatus.SUCCESS;
-    }
-    
-    public virtual void Reset() { }
+        [HideInInspector] public NodeStatus status = NodeStatus.SUCCESS;
+        [HideInInspector] public string guid;
 
-    private void OnEnable()
-    {
-        // Ensure every node has a unique ID when it's created or loaded.
-        if (string.IsNullOrEmpty(guid))
+        public virtual NodeStatus Execute(GameObject agent)
         {
-            guid = System.Guid.NewGuid().ToString();
+            // Default implementation does nothing, can be overridden.
+            return NodeStatus.SUCCESS;
+        }
+        
+        public virtual void Reset() { }
+
+        private void OnEnable()
+        {
+            // Ensure every node has a unique ID when it's created or loaded.
+            if (string.IsNullOrEmpty(guid))
+            {
+                guid = System.Guid.NewGuid().ToString();
+            }
         }
     }
 } 

@@ -1,26 +1,28 @@
 using UnityEngine;
 
-/// <summary>
-/// BOILERPLATE for creating a new Action.
-/// Actions are the "verbs" of your AI - what it can DO.
-/// Examples: MoveToPoint, PlayAnimation, AttackTarget, Patrol, Chase.
-/// 
-/// CRITICAL BEHAVIOR TREE CONCEPTS:
-/// 
-/// 1. LOOPING: Your action is called EVERY FRAME while active!
-///    - The behavior tree calls Execute() repeatedly until you return SUCCESS or FAILURE
-///    - NEVER use loops inside Execute() - the behavior tree IS your loop
-/// 
-/// 2. WHEN TO RETURN WHAT:
-///    - RUNNING: "I'm still working, call me again next frame"
-///    - SUCCESS: "I'm completely done, move to next behavior"  
-///    - FAILURE: "I can't do this, try a different behavior"
-/// 
-/// 3. SMART ACTIONS: Check your own conditions inside Execute()!
-///    - Don't rely on separate sense nodes for ongoing conditions
-///    - Example: Chase action should check "can I still see target?" every frame
-/// </summary>
-public class NewAction : MonoBehaviour, IAction
+namespace NLNPC.Samples
+{
+    /// <summary>
+    /// BOILERPLATE for creating a new Action.
+    /// Actions are the "verbs" of your AI - what it can DO.
+    /// Examples: MoveToPoint, PlayAnimation, AttackTarget, Patrol, Chase.
+    /// 
+    /// CRITICAL BEHAVIOR TREE CONCEPTS:
+    /// 
+    /// 1. LOOPING: Your action is called EVERY FRAME while active!
+    ///    - The behavior tree calls Execute() repeatedly until you return SUCCESS or FAILURE
+    ///    - NEVER use loops inside Execute() - the behavior tree IS your loop
+    /// 
+    /// 2. WHEN TO RETURN WHAT:
+    ///    - RUNNING: "I'm still working, call me again next frame"
+    ///    - SUCCESS: "I'm completely done, move to next behavior"  
+    ///    - FAILURE: "I can't do this, try a different behavior"
+    /// 
+    /// 3. SMART ACTIONS: Check your own conditions inside Execute()!
+    ///    - Don't rely on separate sense nodes for ongoing conditions
+    ///    - Example: Chase action should check "can I still see target?" every frame
+    /// </summary>
+    public class NewAction : MonoBehaviour, IAction
 {
     [Tooltip("A unique name for this action. The LLM uses this to identify the action in the behavior tree.")]
     [SerializeField] private string _name;
@@ -67,4 +69,5 @@ public class NewAction : MonoBehaviour, IAction
         // are not left incomplete, which could cause unexpected AI behavior.
         throw new System.NotImplementedException($"The Execute method for action '{Name}' has not been implemented. Please add your logic and return RUNNING, SUCCESS, or FAILURE.");
     }
+}
 } 

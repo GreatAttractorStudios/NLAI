@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
-[CustomEditor(typeof(BehaviorTree))]
-public class BehaviorTreeInspector : Editor
+namespace NLNPC.Editor
+{
+    [CustomEditor(typeof(BehaviorTree))]
+    public class BehaviorTreeInspector : Editor
 {
     private bool showVisualTree = true;
     private Vector2 scrollPosition;
@@ -157,4 +159,5 @@ public class BehaviorTreeInspector : Editor
         if (node is CompositeNode compositeNode) return compositeNode.children != null && compositeNode.children.Count > 0;
         return false;
     }
+}
 } 

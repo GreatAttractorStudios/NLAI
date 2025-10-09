@@ -1,7 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New NLNPC Settings", menuName = "NLNPC/NLNPC Settings", order = 0)]
-public class NLNPCSettings : ScriptableObject
+namespace NLNPC.Editor
+{
+    [CreateAssetMenu(fileName = "New NLNPC Settings", menuName = "NLNPC/NLNPC Settings", order = 0)]
+    public class NLNPCSettings : ScriptableObject
 {
     [Tooltip("The API key for the LLM service.")]
     public string apiKey;
@@ -11,4 +13,5 @@ public class NLNPCSettings : ScriptableObject
     
     [Tooltip("The model to use, e.g., 'gpt-4-turbo'")]
     public string model = "gpt-4-turbo";
+}
 } 

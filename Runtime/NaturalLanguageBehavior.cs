@@ -2,11 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// The main component to attach to an NPC. It holds the natural language description,
-/// a reference to the compiled BehaviorTree, and executes the tree at runtime.
-/// </summary>
-public class NaturalLanguageBehavior : MonoBehaviour
+namespace NLNPC
+{
+    /// <summary>
+    /// The main component to attach to an NPC. It holds the natural language description,
+    /// a reference to the compiled BehaviorTree, and executes the tree at runtime.
+    /// </summary>
+    public class NaturalLanguageBehavior : MonoBehaviour
 {
     [Tooltip("The compiled Behavior Tree asset generated from the description.")]
     public BehaviorTree behaviorTree;
@@ -105,4 +107,5 @@ public class NaturalLanguageBehavior : MonoBehaviour
             behaviorTree.rootNode.Execute(gameObject);
         }
     }
+}
 } 

@@ -3,8 +3,10 @@ using UnityEditor;
 using UnityEditorInternal;
 using System.Collections.Generic;
 
-[CustomEditor(typeof(CompositeNode), true)]
-public class CompositeNodeInspector : Editor
+namespace NLNPC.Editor
+{
+    [CustomEditor(typeof(CompositeNode), true)]
+    public class CompositeNodeInspector : Editor
 {
     private ReorderableList childList;
 
@@ -150,4 +152,5 @@ public class CompositeNodeInspector : Editor
         
         return node.GetType().Name;
     }
+}
 } 

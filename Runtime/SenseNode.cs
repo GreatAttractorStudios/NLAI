@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "Sense", menuName = "NLNPC/Behavior Tree/Sense", order = 6)]
-public class SenseNode : Node
+namespace NLNPC
+{
+    [CreateAssetMenu(fileName = "Sense", menuName = "NLNPC/Behavior Tree/Sense", order = 6)]
+    public class SenseNode : Node
 {
     public string senseName;
 
@@ -26,4 +28,5 @@ public class SenseNode : Node
         status = sense.Evaluate() ? NodeStatus.SUCCESS : NodeStatus.FAILURE;
         return status;
     }
+}
 } 

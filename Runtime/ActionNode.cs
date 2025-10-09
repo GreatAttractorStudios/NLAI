@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "Action", menuName = "NLNPC/Behavior Tree/Action", order = 5)]
-public class ActionNode : Node
+namespace NLNPC
+{
+    [CreateAssetMenu(fileName = "Action", menuName = "NLNPC/Behavior Tree/Action", order = 5)]
+    public class ActionNode : Node
 {
     public string actionName;
 
@@ -26,4 +28,5 @@ public class ActionNode : Node
         status = action.Execute();
         return status;
     }
+}
 } 

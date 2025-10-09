@@ -1,9 +1,12 @@
-public interface IAction
+namespace NLNPC
 {
-    /// <summary>
-    /// A unique name to identify this specific action instance.
-    /// </summary>
-    string Name { get; }
-    
-    NodeStatus Execute();
-} 
+    public interface IAction
+    {
+        /// <summary>
+        /// A unique name to identify this specific action instance.
+        /// </summary>
+        string Name { get; }
+
+        NodeStatus Execute();
+    }
+}

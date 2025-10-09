@@ -5,7 +5,9 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public static class NLNPCEdHttp
+namespace NLNPC.Editor
+{
+    public static class NLNPCEdHttp
 {
     private class LLMRequest
     {
@@ -76,4 +78,5 @@ public static class NLNPCEdHttp
             }
         }
     }
+}
 } 

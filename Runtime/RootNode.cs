@@ -1,7 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Root", menuName = "NLNPC/Behavior Tree/Root", order = 0)]
-public class RootNode : Node
+namespace NLNPC
+{
+    [CreateAssetMenu(fileName = "Root", menuName = "NLNPC/Behavior Tree/Root", order = 0)]
+    public class RootNode : Node
 {
     public Node child;
 
@@ -14,4 +16,5 @@ public class RootNode : Node
 
         return status = child.Execute(agent);
     }
+}
 } 
