@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace NLNPC.Editor
 {
     [CustomEditor(typeof(BehaviorTree))]
-    public class BehaviorTreeInspector : Editor
+    public class BehaviorTreeInspector : UnityEditor.Editor
 {
     private bool showVisualTree = true;
     private Vector2 scrollPosition;

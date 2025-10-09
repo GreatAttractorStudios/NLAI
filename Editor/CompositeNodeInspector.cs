@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace NLNPC.Editor
 {
     [CustomEditor(typeof(CompositeNode), true)]
-    public class CompositeNodeInspector : Editor
+    public class CompositeNodeInspector : UnityEditor.Editor
 {
     private ReorderableList childList;
 

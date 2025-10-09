@@ -4,7 +4,7 @@ using UnityEngine;
 namespace NLNPC.Editor
 {
     [CustomEditor(typeof(NaturalLanguageBehavior))]
-    public class NaturalLanguageBehaviorEditor : Editor
+    public class NaturalLanguageBehaviorEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
